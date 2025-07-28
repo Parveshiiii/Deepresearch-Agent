@@ -28,8 +28,7 @@
 
 ## **Technical Documentation**
 For detailed technical implementation and architecture analysis, please refer to:
-- 📖 [`docs/document-generation-flow.md`](docs/document-generation-flow.md) - English Technical Documentation
-- 📖 [`docs/document-generation-flow-ZH.md`](docs/document-generation-flow-ZH.md) - Chinese Technical Documentation
+- 📖 [`docs/document-generation-flow.md`](docs/document-generation-flow-EN.md) - English Technical Documentation
 
 ## **📞 Contact & Support**
 
