@@ -90,6 +90,7 @@ Please identify only the most critical 1-3 enhancement needs to avoid over-compl
         from agent.configuration import Configuration
         configurable = Configuration.from_runnable_config(config)
         
+        print(f"[DEBUG] analyze_report_enhancement_needs: Using model for LLM: {configurable.reflection_model}")
         llm = ChatGoogleGenerativeAI(
             model=configurable.reflection_model,
             temperature=0.3,

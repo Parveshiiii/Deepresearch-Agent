@@ -53,6 +53,8 @@ genai_client = Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Nodes
 def generate_query(state: OverallState, config: RunnableConfig) -> QueryGenerationState:
+    configurable = Configuration.from_runnable_config(config)
+    print(f"[DEBUG] generate_query: Using model for LLM: {configurable.query_generator_model}")
     """LangGraph node that generates search queries based on the current research task from the plan."""
     configurable = Configuration.from_runnable_config(config)
 
@@ -60,9 +62,9 @@ def generate_query(state: OverallState, config: RunnableConfig) -> QueryGenerati
     if state.get("initial_search_query_count") is None:
         state["initial_search_query_count"] = configurable.number_of_initial_queries
 
-    # init Gemini 2.0 Flash
+    # init Gemini 2.5 Flash
     llm = ChatGoogleGenerativeAI(
-        model=configurable.query_generator_model,
+        model="gemini-2.5-flash",
         temperature=1.0,
         max_retries=2,
         api_key=os.getenv("GEMINI_API_KEY"),
@@ -119,7 +121,7 @@ def continue_to_web_research(state: QueryGenerationState):
 def web_research(state: WebSearchState, config: RunnableConfig) -> OverallState:
     """LangGraph node that performs web research using the native Google Search API tool.
 
-    Executes a web search using the native Google Search API tool in combination with Gemini 2.0 Flash.
+    Executes a web search using the native Google Search API tool in combination with Gemini 2.5 Flash.
 
     Args:
         state: Current graph state containing the search query and research loop count
@@ -138,7 +140,7 @@ def web_research(state: WebSearchState, config: RunnableConfig) -> OverallState:
 
         # Uses the google genai client as the langchain client doesn't return grounding metadata
         response = genai_client.models.generate_content(
-            model=configurable.query_generator_model,
+            model="gemini-2.5-flash",
             contents=formatted_prompt,
             config={
                 "tools": [{"google_search": {}}],
@@ -250,7 +252,7 @@ def reflection(state: OverallState, config: RunnableConfig) -> OverallState:
         # Increment research loop counter
         state["research_loop_count"] = state.get("research_loop_count", 0) + 1
         
-        reasoning_model = configurable.reasoning_model
+        reasoning_model = configurable.query_generator_model  # Unified model from configuration
         current_date = get_current_date()
         research_topic = get_research_topic(state["messages"])
         
@@ -296,8 +298,9 @@ def reflection(state: OverallState, config: RunnableConfig) -> OverallState:
             )
         
         # Initialize LLM
+        print(f"[DEBUG] reflection: Using model for LLM: {reasoning_model}")
         llm = ChatGoogleGenerativeAI(
-            model=reasoning_model,
+            model="gemini-2.5-flash",
             temperature=1.0,
             max_retries=3,  # Increase retry count
             api_key=os.getenv("GEMINI_API_KEY"),
@@ -513,7 +516,7 @@ def finalize_answer(state: OverallState, config: RunnableConfig) -> dict:
     try:
         configurable = Configuration.from_runnable_config(config)
         llm = ChatGoogleGenerativeAI(
-            model=configurable.reflection_model,
+            model="gemini-2.5-flash",
             temperature=0.3,
             max_retries=2,
             api_key=os.getenv("GEMINI_API_KEY"),
@@ -847,10 +850,12 @@ def final_quality_check(content):
 
 
 def planner_node(state: OverallState, config: RunnableConfig) -> dict:
+    configurable = Configuration.from_runnable_config(config)
+    print(f"[DEBUG] planner_node: Using model for LLM: gemini-2.5-flash")
     """LangGraph node that generates a multi-step research plan based on the user's question."""
     configurable = Configuration.from_runnable_config(config)
     llm = ChatGoogleGenerativeAI(
-        model=configurable.query_generator_model,
+        model="gemini-2.5-flash",
         temperature=0.7,
         max_retries=2,
         api_key=os.getenv("GEMINI_API_KEY"),
