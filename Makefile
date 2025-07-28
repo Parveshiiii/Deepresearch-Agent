@@ -8,7 +8,7 @@ help:
 
 dev-frontend:
 	@echo "Starting frontend development server..."
-	@cd frontend && pnpm run dev
+	@cd frontend && npm run dev
 
 dev-backend:
 	@echo "Starting backend development server..."

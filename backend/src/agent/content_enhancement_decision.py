@@ -50,6 +50,7 @@ class ContentEnhancementDecisionMaker:
         from agent.configuration import Configuration
         configurable = Configuration.from_runnable_config(config)
         
+        print(f"[DEBUG] analyze_enhancement_need: Using model for LLM: {configurable.reflection_model}")
         llm = ChatGoogleGenerativeAI(
             model=configurable.reflection_model,  # Use same model as reflection
             temperature=0.3,  # Low temperature for consistency
