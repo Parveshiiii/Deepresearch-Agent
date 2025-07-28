@@ -1,6 +1,6 @@
 # 🚀 Enhanced Version
 
-> Based on the original project, I have optimized the Agent workflow and frontend display effects.
+> Based on the Gemini Fullstack LangGraph Quickstart, I have optimized the Agent workflow and frontend display effects.
 
 ## **Agent Workflow Comparison**
 <table>
