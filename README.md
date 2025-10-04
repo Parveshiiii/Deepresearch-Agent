@@ -1,4 +1,4 @@
-# 🚀 Enhanced Version
+# Enhanced Version
 
 > Based on the Gemini Fullstack LangGraph Quickstart, I have optimized the Agent workflow and frontend display effects.
 
@@ -24,11 +24,6 @@ For detailed technical implementation and architecture analysis, please refer to
 **Author: Parvesh Rawal**
 
 If you have any questions about this project or Agent development, or are interested in business collaboration opportunities, feel free to reach out:
-
-<div align="center">
-
-| Platform | Contact Information |
-|----------|-------------------|
 
 
 </div>
