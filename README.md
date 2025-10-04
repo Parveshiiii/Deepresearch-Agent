@@ -14,17 +14,6 @@
 </tr>
 </table>
 
-## **Frontend Display Enhancement** 
-<table>
-<tr>
-<td align="center"><b>Enhanced Frontend</b></td>
-<td align="center"><b>Original Frontend</b></td>
-</tr>
-<tr>
-<td><img src="./frontend.png" width="400"/></td>
-<td><img src="./app.png" width="400"/></td>
-</tr>
-</table>
 
 ## **Technical Documentation**
 For detailed technical implementation and architecture analysis, please refer to:
